@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+    <script>
+        // <![CDATA[
+        function required() {
+            var fromDate = document.getElementById("fromDate").value;
+            var toDate = document.getElementById("toDate").value;
+            var fromAmount = document.getElementById("fromAmount").value;
+
+            if ((fromDate == "" && toDate != "") ||(toDate == "" && fromDate != "" )) {
+                alert("Jeżeli chcesz przedział czasowy, to podaj obie daty");
+                return false;
+            }
+            if ((fromAmount.length != 0 && (fromDate != "" || toDate != ""))){
+                alert("Nie można wyszukiwać jednocześnie po przedziałach dat i kwot");
+                return false;
+            }
+            if (fromDate > toDate){
+                alert("Zły przedział czasowy");
+                return false;
+            }
+            return true;
+        }
+
+        function disableEmptyInputs(form) {
+            var controls = form.elements;
+            for (var i=0, iLen=controls.length; i<iLen; i++) {
+                controls[i].disabled = controls[i].value == '';
+            }
+        }
+
+        function finalFunction() {
+            if (required()){
+                var form = document.getElementsByName("form")[0];
+                disableEmptyInputs(form);
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        // ]]>
+    </script>
+    <h3>Jakie dane chcesz wyświetlić?</h3>
+    <form name="form" th:action="@{/service/view}" method="post" onsubmit="return finalFunction()">
+        <select required="required" th:name="type">
+            <option selected = "selected" value="">Wybierz typ</option>
+            <option th:value="Wydatek" th:text="Wydatek"></option>
+            <option th:value="Przychód" th:text="Przychód"></option>
+        </select><br/>
+        <h3>Parametry opcjonalne:</h3>
+
+        Od daty: <input type="date" placeholder="" th:name="fromDate" id="fromDate"/>
+        Do daty: <input type="date" th:name="toDate" id="toDate"/><br/>
+
+        Kwota od: <input type="number" th:name="fromAmount" id="fromAmount"/><br/>
+
+        <input type="submit" th:value="Pokaz"/>
+    </form>
+</body>
+</html>

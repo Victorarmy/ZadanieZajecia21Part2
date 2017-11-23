@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+    <h1>Zarządzanie domowym budżetem</h1>
+    <h4>Co chcesz zrobić?</h4>
+    <p th:each="option, rowStat:${options}">
+        <a th:href="@{/service/{optionName}(optionName = ${option.url})}" th:text="${rowStat.index + 1} + '. ' + ${option}"></a>
+    </p>
+</body>
+</html>

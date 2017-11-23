@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+
+    <h3>Dodaj wydatek / przychód : </h3>
+    <form th:action="@{/service/add}" method="post" th:object="${budgetEntity}">
+        <select required="required" th:field="*{type}">
+            <option selected = "selected" value="">Wybierz typ</option>
+            <option th:value="Wydatek" th:text="Wydatek"></option>
+            <option th:value="Przychód" th:text="Przychód"></option>
+        </select><br/>
+        <textarea required="required" placeholder="Opis" th:field="*{description}"/><br/>
+        <input required="required" type="number" placeholder="Kwota" th:field="*{amount}"/><br/>
+        <input required = "required" type="date" th:field="*{date}" /><br/>
+        <input type="submit" th:value="Dodaj"/>
+    </form>
+</body>
+</html>
